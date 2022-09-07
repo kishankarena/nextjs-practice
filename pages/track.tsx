@@ -1,5 +1,6 @@
 // Static Generation with getStaticProps
 import { GetStaticProps, NextPage } from 'next';
+import { useRouter } from 'next/router';
 interface Props {
   tracks: Track[];
 }
@@ -8,12 +9,17 @@ interface Track {
   title: String;
 }
 const Track: NextPage<Props> = ({ tracks }) => {
+  const router = useRouter();
+  function clickHandler(id: String) {
+    router.push(`./product/${id}`);
+  }
   return (
     <ul>
       {tracks.map((track) => {
         return (
-          <div>
-            <h4>{`ID: ${track.id} => Title: ${track.title}`}</h4>
+          <div key={track.id}>
+            <button onClick={() => clickHandler(track.id)}>{track.id}</button>
+            <h4>{`Title: ${track.title}`}</h4>
           </div>
         );
       })}
