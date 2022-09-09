@@ -5,14 +5,14 @@ interface Props {
   products: Product[];
 }
 interface Product {
-  id: Number;
+  id: String;
   title: String;
 }
 const productDetail: NextPage<Props> = ({ products }) => {
   return (
     <ul>
       {products.map((product) => (
-        <li>{product.title}</li>
+        <li key={product.id}>{product.title}</li>
       ))}
     </ul>
   );
