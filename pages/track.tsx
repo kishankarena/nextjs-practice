@@ -35,6 +35,19 @@ export const getStaticProps: GetStaticProps = async () => {
     'https://odyssey-lift-off-rest-api.herokuapp.com/tracks'
   );
   const tracks = await res.json();
+  if (!tracks) {
+    return {
+      redirect: {
+        destination: './',
+        permanent: false,
+      },
+    };
+  }
+  if (tracks.length === 0) {
+    return {
+      notFound: true,
+    };
+  }
   return {
     props: {
       tracks,
