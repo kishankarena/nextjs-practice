@@ -30,6 +30,7 @@ const Track: NextPage<Props> = ({ tracks }) => {
 export default Track;
 
 export const getStaticProps: GetStaticProps = async () => {
+  console.log('Re-Generating....');
   const res = await fetch(
     'https://odyssey-lift-off-rest-api.herokuapp.com/tracks'
   );
@@ -38,5 +39,6 @@ export const getStaticProps: GetStaticProps = async () => {
     props: {
       tracks,
     },
+    revalidate: 10,
   };
 };
