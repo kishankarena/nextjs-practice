@@ -17,7 +17,7 @@ const Track: NextPage<Props> = ({ tracks }) => {
     <ul>
       {tracks.map((track) => {
         return (
-          <div key={track.id}>
+          <div key={`${track.id}`}>
             <button onClick={() => clickHandler(track.id)}>{track.id}</button>
             <h4>{`Title: ${track.title}`}</h4>
           </div>

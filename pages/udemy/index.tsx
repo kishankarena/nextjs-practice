@@ -1,24 +1,28 @@
 import { NextPage } from 'next';
 import fs from 'fs/promises';
 import path from 'path';
+import Link from 'next/link';
 interface Props {
   products: Product[];
 }
-interface Product {
+export interface Product {
   id: String;
   title: String;
 }
-const productDetail: NextPage<Props> = ({ products }) => {
+
+const ProductPage: NextPage<Props> = ({ products }) => {
   return (
     <ul>
       {products.map((product) => (
-        <li key={product.id}>{product.title}</li>
+        <li key={`${product.id}`}>
+          <Link href={`/udemy/${product.id}`}>{product.title}</Link>
+        </li>
       ))}
     </ul>
   );
 };
 
-export default productDetail;
+export default ProductPage;
 
 export async function getStaticProps() {
   const filePath = path.join(process.cwd(), 'data', 'dummy-data.json');
