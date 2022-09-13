@@ -11,7 +11,7 @@ const Track: NextPage<Props> = ({ tracks }) => {
     <ul>
       {tracks.map((track) => {
         return (
-          <div key={track.id}>
+          <div key={`${track.id}`}>
             <h4>{`ID: ${track.id} => Title: ${track.title}`}</h4>
           </div>
         );
