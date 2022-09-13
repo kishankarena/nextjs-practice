@@ -8,18 +8,29 @@ interface Props {
 }
 
 const ProductDetailPage: NextPage<Props> = ({ product }) => {
+  if (!product) {
+    return (
+      <div>
+        <h1>Loading.......</h1>
+      </div>
+    );
+  }
   return (
     <div>
       <h1>{product.title}</h1>
     </div>
   );
 };
-
-export async function getStaticProps(context: any) {
-  const { params } = context;
+async function getData() {
   const filePath = path.join(process.cwd(), 'data', 'dummy-data.json');
   const jsonData = await fs.readFile(filePath);
   const data = JSON.parse(jsonData.toString());
+  return data;
+}
+
+export async function getStaticProps(context: any) {
+  const { params } = context;
+  const data = await getData();
 
   const productId = params.pid;
   const product = data.products.find(
@@ -32,13 +43,12 @@ export async function getStaticProps(context: any) {
   };
 }
 export async function getStaticPaths() {
+  const data = await getData();
+  const ids = data.products.map((product:Product)=>product.id);
+  const pathsWithParams = ids.map((id:String)=>({params:{pid:id}}))
   return {
-    paths: [
-      { params: { pid: 'p1' } },
-      { params: { pid: 'p2' } },
-      { params: { pid: 'p3' } },
-    ],
-    fallback: false,
+    paths: pathsWithParams,
+    fallback: true,
   };
 }
 export default ProductDetailPage;
